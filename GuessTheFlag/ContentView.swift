@@ -27,18 +27,17 @@ struct ContentView: View {
                 VStack {
                     Text("Tap the flag of")
                         .foregroundColor(.white)
-                        .font(.headline)
-                        .bold()
+                        .font(.subheadline.weight(.heavy))
                     Text(countries[correctAnswer])
                         .foregroundColor(.white)
-                        .font(.headline)
-                        .bold()
+                        .font(.largeTitle.weight(.semibold))
                     ForEach(0..<3) { number in
                         Button {
                             flagTapped(number)
                         } label: {
                             Image(countries[number])
                                 .renderingMode(.original)
+                                .shadow(color: .black, radius: 5, x: 5, y: 5)
                         }
                     }
                 }
@@ -64,7 +63,7 @@ struct ContentView: View {
     
     func askQuestion() {
         countries.shuffle()
-        correctAnswer = Int.random(in: 0...3)
+        correctAnswer = Int.random(in: 0...2)
     }
 }
 
