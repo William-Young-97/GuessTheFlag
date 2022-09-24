@@ -4,26 +4,16 @@
 //
 //  Created by William Young on 21/09/2022.
 //
+// UK flag doesn't show as an option when asked to see it.
 
 import SwiftUI
 
 struct ContentView: View {
-    var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
-    var correctAnswer = Int.random(in: 0...2)
-    
+    @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
+    @State private var correctAnswer = Int.random(in: 0...2)
+    @State private var tally = 0
     @State private var showingScore = false
     @State private var scoreTitle = ""
-    
-    func flagTapped(_ number: Int) {
-        if number == correctAnswer {
-            scoreTitle = "Correct"
-        } else {
-            scoreTitle = "Wrong"
-        }
-
-        showingScore = true
-    }
-    
     
     var body: some View {
         ZStack{
@@ -54,6 +44,27 @@ struct ContentView: View {
                 }
             }
         }
+        .alert(scoreTitle, isPresented: $showingScore) {
+            Button("Continue", action: askQuestion)
+        } message: {
+            Text("Your score is \(tally)")
+        }
+    }
+    
+    func flagTapped(_ number: Int) {
+        if number == correctAnswer {
+            tally += 1
+            scoreTitle = "Correct"
+        } else {
+            scoreTitle = "Wrong"
+        }
+
+        showingScore = true
+    }
+    
+    func askQuestion() {
+        countries.shuffle()
+        correctAnswer = Int.random(in: 0...3)
     }
 }
 
