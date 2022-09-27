@@ -7,6 +7,16 @@
 // Bug: Clciking the reset alert clicks the flag behind it as an answer for the round.
 import SwiftUI
 
+struct FlagImage: View {
+    var flag: String
+    
+    var body: some View {
+        Image(flag)
+            .renderingMode(.original)
+            .shadow(color: .black, radius: 5, x: 5, y: 5)
+    }
+}
+
 struct ContentView: View {
     @State private var countries = ["Estonia", "France", "Germany", "Ireland", "Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...2)
@@ -38,9 +48,7 @@ struct ContentView: View {
                                 reset()
                             }
                         } label: {
-                            Image(countries[number])
-                                .renderingMode(.original)
-                                .shadow(color: .black, radius: 5, x: 5, y: 5)
+                            FlagImage(flag: countries[number])
                         }
                     }
                 }
